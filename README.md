@@ -2,6 +2,9 @@
 
 Plantilla base del curso de Minería de Datos
 
+**Paola Castillo Camacho**
+*pcstillo6@gmail.com*
+
 **Pineda Lab**
 **ENES Morelia, UNAM**
 
