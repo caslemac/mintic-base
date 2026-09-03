@@ -1,5 +1,7 @@
 import numpy as np
 import pandas as pd
+from .impute_missing import impute_missing
+
 def impute_missing (data, strategy= 'mean', columns= None):
     data= data.copy()
 

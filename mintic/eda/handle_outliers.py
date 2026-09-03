@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import math
+from .handle_outliers import handle_outliers
 def handle_outliers (data, method='iqr', action='trim', threshold=1.5):
     if action == 'trim':
         outliers= detect_outliers (data, method=method, threshold=1.5)

@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 import math
+from .detect_outliers import detect_outliers
+
 def detect_outliers (data, method='iqr', threshold=1.5):
     data= data.copy()
     outliers = pd.DataFrame(False, index=data.index, columns=data.columns)

@@ -1,3 +1,8 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from .plot_missing import plot_missing
+
 def plot_missing (data):
     missing = data.isnull().sum()
     missing= missing [missing  > 0]
