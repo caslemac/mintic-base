@@ -80,3 +80,35 @@ def build_random_forest(X, y, n_trees=10, max_features=None, random_state=None):
         arboles_entrenados.append(arbol)
 
     return arboles_entrenados
+
+
+def prediccion_arbol_solo( arbol, x):
+    if arbol['leaf']:
+        return arbol['class']
+
+    valorX= x[arbol['feature']]
+
+    if valorX in arbol['branches']:
+        return prediccion_arbol_solo(arbol['branches'][valorX], x)
+    else:
+        return arbol['default']
+    
+
+def predict_ensemble(forest, X_test):
+    filas = X_test.shape[0]
+    predicciones_finales = []
+
+    for i in range (filas):
+        x= X_test[i]
+        prediccion_arbol = [prediccion_arbol_solo( arbol, x) for arbol in forest]
+        clases_unicas, conteos = np.unique(prediccion_arbol, return_counts=True)
+
+        maximo= np.max(conteos)
+
+        posibles = clases_unicas[conteos == maximo]
+        
+        prediccion_final = sorted(posibles)[0]
+        
+        predicciones_finales.append(prediccion_final)
+    
+    return np.array(predicciones_finales)
