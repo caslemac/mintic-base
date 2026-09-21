@@ -1,8 +1,10 @@
 import numpy as np
 import random
-from .random_forest import random_forest
+
 
 def bootstrap_sample (X, y, random_state= None):
+    X = np.asarray(X)
+    y = np.asarray(y)
     semilla= np.random.RandomState (random_state)
     filas= X.shape [0]
     indices= semilla.randint (0, filas, size= filas)
@@ -33,6 +35,8 @@ def clase_mayoritaria(y):
     return valores[np.argmax(clase_mas_frecuente)]
 
 def build_id3_tree(X, y, feature_indices=None, max_features=None, rng=None):
+    X = np.asarray(X)
+    y = np.asarray(y)
     if feature_indices is None:
         feature_indices = list(range(X.shape[1]))
     if rng is None:
@@ -66,6 +70,8 @@ def build_id3_tree(X, y, feature_indices=None, max_features=None, rng=None):
 
 
 def build_random_forest(X, y, n_trees=10, max_features=None, random_state=None):
+    X = np.asarray(X)
+    y = np.asarray(y)
     if max_features is None:
         max_features = max(1, int(np.sqrt(X.shape[1])))
 
@@ -95,6 +101,7 @@ def prediccion_arbol_solo( arbol, x):
     
 
 def predict_ensemble(forest, X_test):
+    X_test = np.asarray(X_test)
     filas = X_test.shape[0]
     predicciones_finales = []
 
