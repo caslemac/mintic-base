@@ -22,4 +22,44 @@ def create_kmeans (data, n_clusters=8, max_iter=1000, tol=0.0001,randomstate=Non
     }
     return diccionario
 
+
+def kmeans_fit (kmeans,verbose=False):
+    puntos = kmeans ['data']
+    centroides = kmeans ['centroids'].copy()
+    max_iter = kmeans ['max_iter']
+    tol = kmeans ['tol']
+    k = kmeans ['n_clusters']
+
+    etiqueta= None
+
+    for itera in range (1, max_iter + 1):
+        distancia= np.zeros ((puntos.shape[0], k)) 
+        
+        for i in range (puntos.shape[0]):
+            for j in range (k):         
+ 
+               distancia [i,j] =euclidean_distance (puntos[i], centroides[j])
+                
+        etiquetas = np.argmin(distancia, axis=1)    
+        centroides_actualizados = centroides.copy()        
+
+        for j in range(k):                          
+            grupo = puntos[etiquetas == j]        
+            if len(grupo) > 0:                   
+                centroides_actualizados[j] = grupo.mean(axis=0) 
+     
+        pasos = [euclidean_distance(centroides_actualizados[j], centroides[j]) for j in range(k)]  
+        paso = np.max(pasos)          
+
+        centroides = centroides_actualizados              
+
+        if verbose:                                 
+            print(f"Número de iteración {itera}: movimiento máximo = {paso:.6f}")
+
+        if paso < tol:                        
+            break                                  
+
+    kmeans['centroids'] = centroides                 
+    kmeans['labels'] = etiquetas                
+    return kmeans  
     
